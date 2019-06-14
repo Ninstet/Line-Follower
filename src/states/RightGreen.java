@@ -17,12 +17,17 @@ public class RightGreen extends State {
 		Controller.PILOT.setLinearSpeed(1.0);
 		Controller.PILOT.forward();
 		while (active()) {}
+		Controller.LED("AMBER");
+		
+		Controller.DATA.addLog("Moving over tape.");
+		Controller.PILOT.travel(0.5);
+		
 		Controller.PILOT.setLinearSpeed(Data.LINEAR_SPEED);
 		Controller.PILOT.forward();
 
 		if (LEFT_COLOUR_SENSOR.isBlack() || RIGHT_COLOUR_SENSOR.isBlack()) {	// Space was right green and now we have reached junction
 			Controller.DATA.addLog("Turn right.");
-			Controller.PILOT.travel(Data.WHEEL_SEPARATION/2);
+			Controller.PILOT.travel(Data.WHEEL_SEPARATION/2-1.0);
 			Controller.PILOT.rotate(80.0);
 			
 		} else if (DOUBLE_GREEN.active()) {					// Space was never right green, we just had to move on to double green space

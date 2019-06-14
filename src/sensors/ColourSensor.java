@@ -14,7 +14,7 @@ public class ColourSensor extends Sensor {
 	}
 	
 	public float[] getRGB() {
-		return average(sampler, 100);
+		return average(sampler, 50);
 	}
 	
 	public boolean isBlack() {

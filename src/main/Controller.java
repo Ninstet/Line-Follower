@@ -29,33 +29,42 @@ public class Controller {
 
 	public Controller() {
 		init();
-		
 		PILOT.forward();
 		
 		exit: while (KEYS.getButtons() != Keys.ID_ESCAPE) {
 			for (State s : State.STATES) {
 				if (s.active()) {
+					LED("RED");
 					s.control();
 					PILOT.forward();
+					LED("GREEN");
 					continue exit;
 				}
 			}
 		}
 	}
 	
+	public static void LED(String c) {
+		if (c == "RED") { lejos.hardware.Button.LEDPattern(2); }
+		if (c == "AMBER") { lejos.hardware.Button.LEDPattern(3); Sound.playNote(Sounds.FLUTE, 3000, 50); }
+		if (c == "GREEN") { lejos.hardware.Button.LEDPattern(1); }
+	}
+	
 	private static void init() {
 		DATA.addLog("Initialising...");
+		LED("RED");
 		
-		State.DOUBLE_BLACK.active();
+		State.LEFT_BLACK.active();
+		State.RIGHT_BLACK.active();
 		
 		PILOT.rotate(10.0);
-		PILOT.rotate(-20.0);
-		PILOT.rotate(10.0);
+		PILOT.rotate(-10.0);
 		PILOT.setLinearSpeed(Data.LINEAR_SPEED);
 		PILOT.setAngularSpeed(Data.ANGULAR_SPEED);
 		PILOT.setLinearAcceleration(1.0);
 		
 		DATA.addLog("Done!");
+		LED("AMBER");
 		
 		Sound.playNote(Sounds.FLUTE, 1500, 200);
 		try {
@@ -67,6 +76,7 @@ public class Controller {
 		DATA.addLog("Press any key...");
 		KEYS.waitForAnyPress();
 		DATA.clearLogs();
+		LED("GREEN");
 	}
 
 	public static void main(String[] args) {

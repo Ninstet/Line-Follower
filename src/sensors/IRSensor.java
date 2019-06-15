@@ -17,7 +17,7 @@ public class IRSensor extends Sensor {
 	}
 	
 	public double getDistance() {
-		return average(sampler, 10)[0];
+		return average(sampler, 100)[0];
 	}
 	
 	public void setAngle(int angle) {

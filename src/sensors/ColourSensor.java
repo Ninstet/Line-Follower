@@ -27,4 +27,9 @@ public class ColourSensor extends Sensor {
 		return Math.abs(0.03-colour[0]) < 0.02 && Math.abs(0.08-colour[1]) < 0.02 && Math.abs(0.07-colour[2]) < 0.02;
 	}
 	
+	public boolean isRed() {
+		float[] colour = this.getRGB();
+		return colour[0] > 0.14 && Math.abs(0.03-colour[1]) < 0.02 && Math.abs(0.03-colour[2]) < 0.02;
+	}
+	
 }

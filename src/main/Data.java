@@ -8,7 +8,7 @@ public class Data {
 	
 	public static final double LINEAR_SPEED = 6.0;
 	public static final double ANGULAR_SPEED = 50.0;
-	public static final double ARC_RADIUS = 3;
+	public static final double ARC_RADIUS = 1;
 	public static final double WHEEL_SEPARATION = 11.84;
 	
 	private ArrayList<String> logs = new ArrayList<>();

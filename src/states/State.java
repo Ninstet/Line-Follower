@@ -16,6 +16,7 @@ public abstract class State {
 	public static final RightGreen RIGHT_GREEN = new RightGreen();
 	public static final DoubleBlack DOUBLE_BLACK = new DoubleBlack();
 	public static final DoubleGreen DOUBLE_GREEN = new DoubleGreen();
+	public static final DoubleRed DOUBLE_RED = new DoubleRed();
 	public static final Obstacle OBSTACLE = new Obstacle();
 	
 	protected static final ColourSensor LEFT_COLOUR_SENSOR = new ColourSensor(Controller.EV3_BRICK.getPort("S1"));

@@ -39,9 +39,9 @@ public class Obstacle extends State {
 	private void followWall(double distance, double tolerance) {
 		IR_SENSOR.setAngle(135);
 		
-		while (!LEFT_COLOUR_SENSOR.isBlack() && !RIGHT_COLOUR_SENSOR.isBlack()) {
+		while (!RIGHT_COLOUR_SENSOR.isBlack()) {
 			Controller.PILOT.forward();
-			while (Math.abs(IR_SENSOR.getDistance() - distance) < tolerance && !LEFT_COLOUR_SENSOR.isBlack() && !RIGHT_COLOUR_SENSOR.isBlack()) {}
+			while (Math.abs(IR_SENSOR.getDistance()-distance) < tolerance && !LEFT_COLOUR_SENSOR.isBlack() && !RIGHT_COLOUR_SENSOR.isBlack()) {}
 			
 			if (IR_SENSOR.getDistance() < distance - tolerance) {
 				Controller.LED("AMBER");

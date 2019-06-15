@@ -36,7 +36,7 @@ public class Controller {
 				if (s.active()) {
 					LED("RED");
 					s.control();
-					PILOT.forward();
+					if (!s.equals(State.DOUBLE_RED)) { PILOT.forward(); }
 					LED("GREEN");
 					continue exit;
 				}

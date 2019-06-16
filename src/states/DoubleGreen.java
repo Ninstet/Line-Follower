@@ -14,7 +14,7 @@ public class DoubleGreen extends State {
 		Controller.DATA.addLog("--DOUBLE GREEN--");
 		
 		Controller.DATA.addLog("Turn around.");
-		Controller.PILOT.rotate(160.0);
+		Controller.PILOT.rotate(180);
 		
 		Controller.DATA.addLog("Done!");
 	}

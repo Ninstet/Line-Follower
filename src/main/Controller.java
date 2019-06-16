@@ -42,6 +42,9 @@ public class Controller {
 				}
 			}
 		}
+		
+		PILOT.stop();
+		KEYS.waitForAnyPress();
 	}
 	
 	public static void LED(String c) {

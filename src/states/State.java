@@ -3,8 +3,9 @@ package states;
 import java.util.ArrayList;
 
 import main.Controller;
-import sensors.ColourSensor;
-import sensors.IRSensor;
+import sensors.Colour;
+import sensors.Gyro;
+import sensors.IR;
 
 public abstract class State {
 	
@@ -19,9 +20,10 @@ public abstract class State {
 	public static final DoubleRed DOUBLE_RED = new DoubleRed();
 	public static final Obstacle OBSTACLE = new Obstacle();
 	
-	protected static final ColourSensor LEFT_COLOUR_SENSOR = new ColourSensor(Controller.EV3_BRICK.getPort("S1"));
-	protected static final ColourSensor RIGHT_COLOUR_SENSOR = new ColourSensor(Controller.EV3_BRICK.getPort("S2"));
-	protected static final IRSensor IR_SENSOR = new IRSensor(Controller.EV3_BRICK.getPort("S4"));
+	protected static final Colour LEFT_COLOUR_SENSOR = new Colour(Controller.EV3_BRICK.getPort("S1"));
+	protected static final Colour RIGHT_COLOUR_SENSOR = new Colour(Controller.EV3_BRICK.getPort("S2"));
+	protected static final Gyro GYRO = new Gyro(Controller.EV3_BRICK.getPort("S3"));
+	protected static final IR IR_SENSOR = new IR(Controller.EV3_BRICK.getPort("S4"));
 	
 	protected State() {
 		if (!STATES.contains(this)) {

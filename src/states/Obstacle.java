@@ -16,21 +16,10 @@ public class Obstacle extends State {
 		Controller.PILOT.rotate(-90);
 		
 		Controller.DATA.addLog("Losing line...");		
-		followWall(20, 5);
-		
-//		for (int i = 0; i < 2; i++) {
-//			followWall(15, 3, 30);
-//			
-//			Controller.LED("AMBER");
-//			Controller.PILOT.travel(15);
-//			Controller.PILOT.rotate(90);
-//			Controller.PILOT.travel(15);
-//			Controller.LED("RED");
-//		}
-		
+		followWall(25, 5);
 		Controller.DATA.addLog("Line found.");
+		
 		Controller.PILOT.arcForward(-1);
-		Controller.LED("AMBER");
 		while (!LEFT_COLOUR_SENSOR.isBlack()) {}
 		Controller.PILOT.forward();
 		Controller.DATA.addLog("Done!");
@@ -43,12 +32,12 @@ public class Obstacle extends State {
 			Controller.PILOT.forward();
 			while (Math.abs(IR_SENSOR.getDistance()-distance) < tolerance && !LEFT_COLOUR_SENSOR.isBlack() && !RIGHT_COLOUR_SENSOR.isBlack()) {}
 			
-			if (IR_SENSOR.getDistance() < distance - tolerance) {
+			if (IR_SENSOR.getDistance() < distance - tolerance && !RIGHT_COLOUR_SENSOR.isBlack()) {
 				Controller.LED("AMBER");
 				Controller.PILOT.arcForward(-Data.WHEEL_SEPARATION);
 				while (IR_SENSOR.getDistance() < distance && !LEFT_COLOUR_SENSOR.isBlack() && !RIGHT_COLOUR_SENSOR.isBlack()) {}
 				
-			} else if (IR_SENSOR.getDistance() > distance - tolerance) {
+			} else if (IR_SENSOR.getDistance() > distance - tolerance && !RIGHT_COLOUR_SENSOR.isBlack()) {
 				Controller.LED("AMBER");
 				Controller.PILOT.arcForward(Data.WHEEL_SEPARATION);
 				while (IR_SENSOR.getDistance() > distance && !LEFT_COLOUR_SENSOR.isBlack() && !RIGHT_COLOUR_SENSOR.isBlack()) {}
@@ -57,6 +46,8 @@ public class Obstacle extends State {
 			Controller.LED("RED");
 		}
 		
+		Controller.PILOT.stop();
+		Controller.LED("AMBER");
 		IR_SENSOR.setAngle(0);
 	}
 

@@ -4,8 +4,6 @@ import main.Controller;
 import main.Data;
 
 public class DoubleBlack extends State {
-	int angR, angL;
-	boolean cont;
 
 	@Override
 	public boolean active() {
@@ -19,51 +17,58 @@ public class DoubleBlack extends State {
 		
 		Controller.PILOT.travel(Data.WHEEL_SEPARATION/2);
 		
-		angR = 180;
-		angL = 180;
-		cont = false;
+		boolean cont = false;
+		double angR = 180.0;
+		double angL = 180.0;
+		double forward = GYRO.getAngle();
 		
 		Controller.DATA.addLog("Checking right...");
-		for (int i = 0; i < 9; i++) {
-			if (LEFT_COLOUR_SENSOR.isBlack() && i <= 3) { cont = true ;}
-			Controller.PILOT.rotate(10);
-			if (RIGHT_COLOUR_SENSOR.isBlack()) { Controller.LED("AMBER"); angR = i * 10; }
+		Controller.PILOT.arcForward(Data.ARC_RADIUS);
+		
+		while (Math.abs(GYRO.getAngle() - forward) < 90) {
+			if (LEFT_COLOUR_SENSOR.isBlack() && Math.abs(GYRO.getAngle() - forward) < 30) { cont = true; break; }
+			if (RIGHT_COLOUR_SENSOR.isBlack()) {
+				Controller.LED("AMBER");
+				angR = Math.abs(forward - GYRO.getAngle());
+				break;
+			}
 		}
+		
 		Controller.LED("RED");
-		Controller.PILOT.rotate(-90);
+		GYRO.rotateTo(forward);
 		
 		Controller.DATA.addLog("Checking left...");
-		for (int j = 0; j < 9; j++) {
-			if (RIGHT_COLOUR_SENSOR.isBlack() && j <= 3) { cont = true ;}
-			Controller.PILOT.rotate(-10);
-			if (LEFT_COLOUR_SENSOR.isBlack()) { Controller.LED("AMBER"); angL = j * 10; }
-		}
-		Controller.LED("RED");
-		Controller.DATA.addLog("L: " + angL + " / R: " + angR);
+		Controller.PILOT.arcForward(-Data.ARC_RADIUS);
 		
-		//Math.abs(((angR+angL)/2)-90) <= 20
-		if (Math.abs(angR - angL) <= 20) {
-			if (cont == true) {
-				Controller.DATA.addLog("Move forward.");
-				Controller.PILOT.rotate(80);
-			} else {
-				if (Controller.DATA.getLogs()[2].contains("--LEFT BLACK--")) {
-					Controller.DATA.addLog("Continue right.");
-					Controller.PILOT.rotate(90 + angR + 20);
-					
-				} else {
-					Controller.DATA.addLog("Continue left.");
-					Controller.PILOT.rotate(90 - angL - 20);
-				}
+		while (Math.abs(GYRO.getAngle() - forward) < 90 && !cont) {
+			if (RIGHT_COLOUR_SENSOR.isBlack() && Math.abs(GYRO.getAngle() - forward) < 30) { cont = true; break; }
+			if (LEFT_COLOUR_SENSOR.isBlack()) {
+				Controller.LED("AMBER");
+				angL = Math.abs(forward - GYRO.getAngle());
+				break;
 			}
+		}
+		
+		Controller.LED("RED");
+		
+		if (cont == true) {
+			Controller.DATA.addLog("Move forward.");
+			GYRO.rotateTo(forward);
 			
-		} else if (angL > angR) {
-			Controller.DATA.addLog("Turn right.");
-			Controller.PILOT.rotate(90 + angR + 20);
+		} else {
+			Controller.DATA.addLog("L: " + ((int)angL) + " / R: " + ((int)angR));
 			
-		} else if (angL < angR) {
-			Controller.DATA.addLog("Turn left.");
-			Controller.PILOT.rotate(90 - angL - 20);
+			if (angL > angR) {
+				Controller.DATA.addLog("Turn right.");
+				GYRO.rotateTo(forward);
+				Controller.PILOT.arcForward(Data.ARC_RADIUS);
+				while (!RIGHT_COLOUR_SENSOR.isBlack()) {}
+				Controller.PILOT.rotate(20);
+				
+			} else if (angL < angR) {
+				Controller.DATA.addLog("Turn left.");
+				Controller.PILOT.rotate(-20);
+			}
 		}
 		
 		Controller.DATA.addLog("Done!");

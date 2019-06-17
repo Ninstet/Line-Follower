@@ -3,10 +3,10 @@ package sensors;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 
-public class ColourSensor extends Sensor {
+public class Colour extends Sensor {
 	EV3ColorSensor RGB_SENSOR;
 	
-	public ColourSensor(Port port) {
+	public Colour(Port port) {
 		RGB_SENSOR = new EV3ColorSensor(port);
 		RGB_SENSOR.setFloodlight(false);
 		
@@ -24,7 +24,7 @@ public class ColourSensor extends Sensor {
 	
 	public boolean isGreen() {
 		float[] colour = this.getRGB();
-		return Math.abs(0.03-colour[0]) < 0.02 && Math.abs(0.08-colour[1]) < 0.02 && Math.abs(0.07-colour[2]) < 0.02;
+		return Math.abs(0.03-colour[0]) < 0.025 && Math.abs(0.08-colour[1]) < 0.025 && Math.abs(0.07-colour[2]) < 0.025;
 	}
 	
 	public boolean isRed() {

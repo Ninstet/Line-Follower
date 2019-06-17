@@ -19,8 +19,8 @@ public class Controller {
 	
 	public static final EV3LargeRegulatedMotor LEFT_MOTOR = new EV3LargeRegulatedMotor(MotorPort.A);
 	public static final EV3LargeRegulatedMotor RIGHT_MOTOR = new EV3LargeRegulatedMotor(MotorPort.D);
-	public static final Wheel WHEEL1 = WheeledChassis.modelWheel(LEFT_MOTOR, 5.697).offset(-Data.WHEEL_SEPARATION/2);
-	public static final Wheel WHEEL2 = WheeledChassis.modelWheel(RIGHT_MOTOR, 5.697).offset(Data.WHEEL_SEPARATION/2);
+	public static final Wheel WHEEL1 = WheeledChassis.modelWheel(LEFT_MOTOR, 5.697).offset(-Data.WHEEL_SEPARATION / 2);
+	public static final Wheel WHEEL2 = WheeledChassis.modelWheel(RIGHT_MOTOR, 5.697).offset(Data.WHEEL_SEPARATION / 2);
 	public static final Chassis CHASSIS = new WheeledChassis(new Wheel[] {WHEEL1, WHEEL2 }, WheeledChassis.TYPE_DIFFERENTIAL);
 	
 	public static final MovePilot PILOT = new MovePilot(CHASSIS);
@@ -64,7 +64,8 @@ public class Controller {
 		PILOT.rotate(-10.0);
 		PILOT.setLinearSpeed(Data.LINEAR_SPEED);
 		PILOT.setAngularSpeed(Data.ANGULAR_SPEED);
-		PILOT.setLinearAcceleration(1.0);
+		PILOT.setLinearAcceleration(10.0);
+		PILOT.setAngularAcceleration(1000.0);
 		
 		DATA.addLog("Done!");
 		LED("AMBER");

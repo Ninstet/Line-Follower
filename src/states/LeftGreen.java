@@ -20,7 +20,7 @@ public class LeftGreen extends State {
 		Controller.LED("AMBER");
 		
 		Controller.DATA.addLog("Moving over tape.");
-		Controller.PILOT.travel(0.5);
+		Controller.PILOT.travel(0.75);
 		
 		Controller.PILOT.setLinearSpeed(Data.LINEAR_SPEED);
 		Controller.PILOT.forward();
